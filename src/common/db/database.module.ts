@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ModuleBuilder } from './utils';
-
 import { UserRepository } from './repositories/user.repository';
 import User from './models/user.model';
 

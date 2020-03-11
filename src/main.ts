@@ -30,7 +30,7 @@ async function bootstrap() {
     setupDebugMode(app);
   }
 
-  await app.listen(config.port);
+  await app.listen(config.port, () => Logger.log(`Server run on port: ${config.port}`));
 }
 
 bootstrap();

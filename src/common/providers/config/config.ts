@@ -47,7 +47,7 @@ export class Config extends ConfigBase {
       APP_HOSTNAME: Joi.string().required(),
       DB_HOST: Joi.string().required(),
       DB_NAME: Joi.string().default('hospital'),
-      ALLOWED_DOMAIN: Joi.string().required(),
+      ALLOWED_DOMAINS: Joi.string().required(),
       ALLOWED_HEADERS: Joi.string().default('*'),
       ENABLE_SWAGGER: Joi.bool().default(false)
     });

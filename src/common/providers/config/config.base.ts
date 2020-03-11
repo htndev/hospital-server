@@ -12,8 +12,6 @@ const LOG_LEVEL = {
   LOG: 'log'
 };
 
-console.log(Object.keys(process.env));
-
 const LOG_LEVELS: {[key: string]: LogLevel[]} = {
   debug: ['debug', 'verbose', 'log', 'warn', 'error'],
   verbose: ['verbose', 'log', 'warn', 'error'],
