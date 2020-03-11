@@ -19,13 +19,10 @@ console.log(new Config());
     }),
     MongooseModule.forRootAsync({
       inject: [Config],
-      useFactory: async (config: Config) => {
-        console.log(config);
-        return config.dbConfig;
-      }
+      useFactory: async (config: Config) => config.dbConfig
     })
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, AuthService]
+  controllers: [AppController],
+  providers: [AppService]
 })
 export class AppModule {}
