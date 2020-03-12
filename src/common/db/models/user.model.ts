@@ -53,7 +53,7 @@ export default class User {
   @ApiModelProperty()
   password: string;
 
-  @prop({ required: true })
+  @prop({ default: new Date() })
   @ApiModelProperty()
   regDate: Date;
 }

@@ -16,6 +16,7 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   createUser(user: User) {
+    console.log(user);
     return this.create(new this.model(user));
   }
 

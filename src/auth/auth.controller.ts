@@ -1,19 +1,17 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Body, Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import User, { Gender } from '../common/db/models/user.model';
+import User from '../common/db/models/user.model';
+import { NewUserDto } from '../dto/requests.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  @Post('create')
+  @Put()
   async getAuth(
-    @Param('phone') phone: string,
-    @Param('name') name: string,
-    @Param('surname') surname: string,
-    @Param('patronymics') patronymics: string,
-    @Param('gender') gender: Gender,
-    @Param('password') password: string
+    @Body('phone') phone: string
   ): Promise<object> {
-    return await this.authService.something({ phone, name, surname, patronymics, gender, password } as User);
+    console.log(phone);
+    console.log('===');
+    return await this.authService.something({phone} as User);
   }
 }
