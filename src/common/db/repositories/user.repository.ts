@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { Types, Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { BaseRepository } from './base.repository';
 import User from '../models/user.model';
 
@@ -17,5 +17,9 @@ export class UserRepository extends BaseRepository<User> {
 
   createUser(user: User) {
     return this.create(new this.model(user));
+  }
+
+  async getSomeShit(query: {}) {
+    return this.findOne(query);
   }
 }

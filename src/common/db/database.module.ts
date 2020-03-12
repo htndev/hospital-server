@@ -6,11 +6,11 @@ import User from './models/user.model';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([ModuleBuilder.buildModelForType(User)])
+    MongooseModule.forFeature([ ModuleBuilder.buildModelForType(User) ])
   ],
   providers: [
     UserRepository
   ],
-  exports: [UserRepository]
+  exports: [ UserRepository ]
 })
 export class DatabaseModule {}

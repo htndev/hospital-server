@@ -1,8 +1,8 @@
 import { prop, index } from '@typegoose/typegoose';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
-type Gender = 'male' | 'female';
+export type Gender = 'male' | 'female';
 
-@index({phone: 1}, { unique: true, background: true })
+@index({ phone: 1 }, { unique: true, background: true })
 export default class User {
   constructor({
     phone,
@@ -18,6 +18,7 @@ export default class User {
     patronymics?: string;
     gender?: Gender;
     password?: string;
+    regDate?: Date;
   } = {}) {
     this.phone = phone;
     this.name = name;

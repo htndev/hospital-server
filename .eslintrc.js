@@ -25,8 +25,9 @@ module.exports = {
     'sort-imports': 'off',
     'no-duplicate-imports': 'error',
     'no-trailing-spaces': 'warn',
-    'object-curly-spacing': [2, 'always'],
+    'object-curly-spacing': ['error', 'always'],
     'no-multi-spaces': 'warn',
-     '@typescript-eslint/no-var-requires': 'off'
+     '@typescript-eslint/no-var-requires': 'off',
+    'array-bracket-spacing': ['error', 'always']
   },
 };

@@ -13,11 +13,11 @@ const LOG_LEVEL = {
 };
 
 const LOG_LEVELS: {[key: string]: LogLevel[]} = {
-  debug: ['debug', 'verbose', 'log', 'warn', 'error'],
-  verbose: ['verbose', 'log', 'warn', 'error'],
-  log: ['log', 'warn', 'error'],
-  warn: ['warn', 'error'],
-  error: ['error']
+  debug: [ 'debug', 'verbose', 'log', 'warn', 'error' ],
+  verbose: [ 'verbose', 'log', 'warn', 'error' ],
+  log: [ 'log', 'warn', 'error' ],
+  warn: [ 'warn', 'error' ],
+  error: [ 'error' ]
 };
 
 export abstract class ConfigBase {

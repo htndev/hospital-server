@@ -4,8 +4,8 @@ import { DatabaseModule } from './db/database.module';
 
 @Global()
 @Module({
-  imports: [DatabaseModule],
-  providers: [Config],
-  exports: [Config, DatabaseModule]
+  imports: [ DatabaseModule ],
+  providers: [ Config ],
+  exports: [ Config, DatabaseModule ]
 })
 export class CommonModule {}

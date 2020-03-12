@@ -20,7 +20,7 @@ export abstract class BaseRepository<T> {
   }
 
   protected async update(item: DocumentType<T>): PromiseDocument<T> {
-    return this.model.findByIdAndUpdate(item.id, item, {new: true}).exec();
+    return this.model.findByIdAndUpdate(item.id, item, { new: true }).exec();
   }
 
   protected async findAll(filter = {}, projection = null, options = null): PromiseDocumentsArray<T> {
