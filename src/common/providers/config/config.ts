@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as Joi from 'joi';
 import { ConfigBase } from './config.base';
+import { SchemaOptions } from 'mongoose';
 
 @Injectable()
 export class Config extends ConfigBase {
@@ -24,6 +25,14 @@ export class Config extends ConfigBase {
     return this.hostname.includes('localhost') ? `http://${this.hostname}` : `https://${this.hostname}`;
   }
 
+  get passwordSecret(): number {
+    return this.config.PASSWORD_SECRET;
+  }
+
+  get saltRounds(): number {
+    return this.config.PASSWORD_SALT_ROUNDS;
+  }
+
   get dbConfig(): any {
     return {
       uri: this.config.DB_HOST,
@@ -33,8 +42,10 @@ export class Config extends ConfigBase {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
-      useFindAndModify: false
-    }
+      useFindAndModify: false,
+      versionKey: false,
+      id: false
+    } as SchemaOptions;
   }
 
   get enableSwagger(): boolean {
@@ -49,7 +60,9 @@ export class Config extends ConfigBase {
       DB_NAME: Joi.string().default('hospital'),
       ALLOWED_DOMAINS: Joi.string().required(),
       ALLOWED_HEADERS: Joi.string().default('*'),
-      ENABLE_SWAGGER: Joi.bool().default(false)
+      ENABLE_SWAGGER: Joi.bool().default(false),
+      PASSWORD_SECRET: Joi.string().required(),
+      PASSWORD_SALT_ROUNDS: Joi.number().default(10)
     });
   }
 }

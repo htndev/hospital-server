@@ -28,6 +28,8 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'no-multi-spaces': 'warn',
      '@typescript-eslint/no-var-requires': 'off',
-    'array-bracket-spacing': ['error', 'always']
+    'array-bracket-spacing': ['error', 'always'],
+    camelcase: 'off',
+    '@typescript-eslint/camelcase': 'off',
   },
 };

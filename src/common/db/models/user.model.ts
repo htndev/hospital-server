@@ -1,7 +1,23 @@
-import { prop, index } from '@typegoose/typegoose';
+import { prop, index, pre } from '@typegoose/typegoose';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { Validator } from '@typegoose/typegoose/lib/types';
+import CONSTANTS from '../../constants';
+import { SecurityProvider } from '../../providers/security/security';
+
 export type Gender = 'male' | 'female';
 
+const validators: { [key: string]: Validator } = {
+  password: {
+    validator: (v: string): boolean => CONSTANTS.PASSWORD_PATTERN().test(v),
+    message: 'Password should has minimum 6 symbols.'
+  }
+};
+
+@pre<User>('save', async function(next) {
+  await this.validate();
+  this.password = await SecurityProvider.cryptPassword(this.password);
+  next();
+})
 @index({ phone: 1 }, { unique: true, background: true })
 export default class User {
   constructor({
@@ -41,7 +57,7 @@ export default class User {
   @ApiModelProperty()
   name: string;
 
-  @prop({ required: true, trim: true, default: '' })
+  @prop({ trim: true, default: '' })
   @ApiModelProperty()
   patronymics: string;
 
@@ -49,9 +65,13 @@ export default class User {
   @ApiModelProperty()
   gender: Gender;
 
-  @prop({ required: true, trim: true, })
+  @prop({ required: true, trim: true, validate: validators.password })
   @ApiModelProperty()
   password: string;
+
+  @prop({ default: '' })
+  @ApiModelProperty()
+  hash: string;
 
   @prop({ default: new Date() })
   @ApiModelProperty()

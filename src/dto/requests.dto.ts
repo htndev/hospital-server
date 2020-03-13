@@ -8,3 +8,8 @@ export class NewUserDto {
   gender: Gender;
   password: string;
 }
+
+export class LoginUser {
+  phone: string;
+  password: string;
+}
