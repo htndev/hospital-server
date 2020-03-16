@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Document } from 'mongoose';
@@ -11,12 +11,18 @@ export class UserRepository extends BaseRepository<User> {
     super(userModel);
   }
 
-  async getUser({ phone, password }: { phone: string, password: string }): Promise<Document> {
+  async getUserWithPassword({ phone, password }: {phone: string, password: string}): Promise<Document> {
     const user = this.findOne({ phone, password });
     if(!user) {
       throw new NotFoundException('User with this phone does not exists.')
     }
     return user;
+  }
+
+  async getUser({ phone }: { phone: string }): Promise<Document> {
+    return this.findOne({ phone }, {
+      _id: true
+    });
   }
 
   async createUser(user: User) {

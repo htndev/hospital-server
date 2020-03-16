@@ -61,7 +61,6 @@ export class Config extends ConfigBase {
       ALLOWED_DOMAINS: Joi.string().required(),
       ALLOWED_HEADERS: Joi.string().default('*'),
       ENABLE_SWAGGER: Joi.bool().default(false),
-      PASSWORD_SECRET: Joi.string().required(),
       PASSWORD_SALT_ROUNDS: Joi.number().default(10)
     });
   }

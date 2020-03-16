@@ -3,6 +3,7 @@ export default {
   DEFAULT_ERROR_KEY: '[default]',
   REJECTIONS: {
     'duplicate key': '{{ field }} already exists',
+    'Not all data provided': 'Not all required data provided',
     '[default]': 'Error occurred'
   },
   REJECTIONS_TEMPlATE: {
