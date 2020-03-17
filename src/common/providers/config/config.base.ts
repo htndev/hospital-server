@@ -35,9 +35,6 @@ export abstract class ConfigBase {
         .valid(LOG_LEVEL.DEBUG, LOG_LEVEL.VERBOSE, LOG_LEVEL.INFO, LOG_LEVEL.WARN, LOG_LEVEL.ERROR)
         .default(LOG_LEVEL.ERROR)
     });
-    console.log('===========');
-    console.log(process.env);
-    console.log('===========');
     this.config = this.validateConfig(process.env, schema);
 
   }
