@@ -8,6 +8,20 @@ export class Config extends ConfigBase {
   get allowedDomains(): string[] {
     return this.config.ALLOWED_DOMAINS.split(',');
   }
+  get dbConfig(): SchemaOptions {
+    return {
+      uri: this.config.DB_HOST,
+      dbName: this.config.DB_NAME,
+      retryDelay: 2000,
+      retryAttempts: 5,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      versionKey: false,
+      id: false
+    } as SchemaOptions;
+  }
 
   get allowedHeaders(): string {
     return this.config.ALLOWED_HEADERS;
@@ -25,27 +39,8 @@ export class Config extends ConfigBase {
     return this.hostname.includes('localhost') ? `http://${this.hostname}` : `https://${this.hostname}`;
   }
 
-  get passwordSecret(): number {
-    return this.config.PASSWORD_SECRET;
-  }
-
   get saltRounds(): number {
     return this.config.PASSWORD_SALT_ROUNDS;
-  }
-
-  get dbConfig(): any {
-    return {
-      uri: this.config.DB_HOST,
-      dbName: this.config.DB_NAME,
-      retryDelay: 2000,
-      retryAttempts: 5,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      versionKey: false,
-      id: false
-    } as SchemaOptions;
   }
 
   get enableSwagger(): boolean {

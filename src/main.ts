@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
-import * as compression from 'compression';
-import * as cors from 'cors';
+import { Logger, Req } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { Config } from './common/providers/config/config';
-import { LoggingInterceptors } from './common/interceptors/logging.interceptors';
+import * as cors from 'cors';
+import * as compression from 'compression';
 import { setupSwagger } from './common/utils/swagger';
 import { setupDebugMode } from './common/utils/debug';
 
@@ -20,7 +20,7 @@ async function bootstrap() {
   Logger.overrideLogger(config.logLevels);
 
   app.use(compression());
-  app.useGlobalInterceptors(new LoggingInterceptors());
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   if(config.enableSwagger) {
     setupSwagger(app);
@@ -30,7 +30,7 @@ async function bootstrap() {
     setupDebugMode(app);
   }
 
-  await app.listen(config.port, () => Logger.log(`Server run on port: ${config.port}`));
+  await app.listen(config.port, () => Logger.log(`Server started on port: ${config.port}.`));
 }
 
 bootstrap();

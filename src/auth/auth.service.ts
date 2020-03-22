@@ -1,47 +1,51 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import * as request from 'request-promise';
-import { UserRepository } from '../common/db/repositories/user.repository';
-import { checkEmptyProperties } from '../common/utils/validate-objects';
-import { signInUser, signUpUser } from '../common/types/comarable-objects';
+import {
+  BadRequestException,
+  Injectable,
+  ConflictException,
+  Logger,
+  InternalServerErrorException
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from '../common/db/interfaces';
+import { NewUserDto } from '../dto/auth.dto';
+import { parseMongooseError } from '../common/utils/helpers';
+import { removePassword } from '../common/utils/helpers';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-  async signIn(userData: any) {
-    checkEmptyProperties(userData, signInUser);
-    // return await this.userRepository.getUser(userData);
-    return '';
+  async create(user: NewUserDto) {
+    const newUser = new this.userModel(user);
+    if(await this.exists(newUser)) {
+      throw new ConflictException('Пользователь с таким телефоном уже существует.');
+    }
+
+    await newUser.validate().catch(err => {
+      Logger.error(err);
+      const e = parseMongooseError(err);
+      throw new BadRequestException(e);
+    });
+
+    await newUser.save().catch(err => {
+      Logger.error(err);
+      throw new InternalServerErrorException('Что-то пошло не так.');
+    });
+
+    const { _doc } = newUser as any;
+    return removePassword(_doc);
   }
 
-  async signUp(userData: any) {
-    checkEmptyProperties(userData, signUpUser);
-    this.validateSignUp(userData);
-    try {
-      const req = await request.get(`http://localhost:3000/auth/exists/${userData.phone}`)
-      console.log(req);
-      const d = JSON.parse(req);
-      return d;
-      return await this.userRepository.createUser(userData);
-    } catch (e) {
-      throw new NotFoundException('User not found.');
-    }
+  async exists({ phone }: {phone: string}): Promise<boolean> {
+    const exists = await this.userModel.findOne({ phone }, {
+      phone: 1,
+      _id: 0
+    });
+    return !!exists;
   }
 
-  private validateSignUp(data: any) {
-    if (data.password !== data.passwordConfirmation) {
-      throw new BadRequestException('Passwords do not match.');
-    }
-  }
-
-  async getUser({ phone }: {phone: string}) {
-    const user = await this.userRepository.getUser({ phone });
-    if(!user) {
-      throw new NotFoundException('User not found');
-    }
-    return {
-      exists: true,
-      status: 200
-    };
+  async getUserByPhone({ phone }: {phone: string}): Promise<{ phone: string; password: string }> {
+    return this.userModel.findOne({ phone });
   }
 }

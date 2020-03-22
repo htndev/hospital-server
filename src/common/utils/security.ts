@@ -1,11 +1,8 @@
 import { genSalt, hash, compare } from 'bcrypt';
-import { Config } from '../config/config'
 
-const config = new Config();
-
-export class SecurityProvider {
+export class Security {
   static async cryptPassword(password: string): Promise<string> {
-    const salt = await genSalt(config.saltRounds);
+    const salt = await genSalt();
     return await hash(password, salt);
   }
 
