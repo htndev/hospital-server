@@ -11,7 +11,7 @@ jobs:
           steps:
             - run: npm i
             - run: npm run build
-            - run: npm run start:prod
+            - run: node dist/main PORT=80 APP_HOSTNAME=localhost:3000 LOG_LEVEL=debug ALLOWED_DOMAINS=http://localhost:8080,http://localhost:8081 ALLOWED_HEADERS=* DB_HOST=mongodb+srv://dbAdmin:QFb8WJpDdeWNZwCc@htn-cluster-lxa7j.mongodb.net DB_NAME=hospital ENABLE_SWAGGER=true NODE_ENV=development
 workflows:
     build-and-test:
       jobs:
