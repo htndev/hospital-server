@@ -9,8 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from '../common/db/interfaces';
 import { NewUserDto } from '../dto/auth.dto';
-import { parseMongooseError } from '../common/utils/helpers';
-import { removePassword } from '../common/utils/helpers';
+import { parseMongooseError, removePassword } from '../common/utils/helpers';
 
 @Injectable()
 export class AuthService {

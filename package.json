@@ -26,6 +26,7 @@
     "@nestjs/jwt": "^7.0.0",
     "@nestjs/mongoose": "^6.4.0",
     "@nestjs/platform-express": "^6.7.2",
+    "@nestjs/serve-static": "^2.1.0",
     "@typegoose/typegoose": "^6.4.0",
     "bcrypt": "^4.0.1",
     "compression": "^1.7.4",
@@ -34,6 +35,7 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.9.5",
     "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3"

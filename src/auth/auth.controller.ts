@@ -8,12 +8,12 @@ import {
   BadRequestException
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { NewUserDto }                      from '../dto/auth.dto';
+import { NewUserDto } from '../dto/auth.dto';
 import { isValidBySchema, removePassword } from '../common/utils/helpers';
 import {
   newUserSchema,
   loginUserSchema
-}                                          from './schemas';
+} from './schemas';
 import { Security } from '../common/utils/security';
 
 @Controller('auth')

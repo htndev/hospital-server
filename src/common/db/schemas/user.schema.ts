@@ -26,14 +26,6 @@ const UserSchema = new Schema({
   patronymics: {
     type: String
   },
-  gender: {
-    type: String,
-    required: true,
-    validate: {
-      validator: (v: string) => v === 'male' || v === 'female',
-      message: 'Пол не подходящий.'
-    }
-  },
   password: {
     type: String,
     required: true,
