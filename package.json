@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
+    "start:zeit": "node dist/main PORT=80 APP_HOSTNAME=localhost:3000 LOG_LEVEL=debug ALLOWED_DOMAINS=http://localhost:8080,http://localhost:8081 ALLOWED_HEADERS=* DB_HOST=mongodb+srv://dbAdmin:QFb8WJpDdeWNZwCc@htn-cluster-lxa7j.mongodb.net DB_NAME=hospital ENABLE_SWAGGER=true NODE_ENV=development",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix",
