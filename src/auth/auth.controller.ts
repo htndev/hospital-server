@@ -13,7 +13,7 @@ import { isValidBySchema, removePassword } from '../common/utils/helpers';
 import {
   newUserSchema,
   loginUserSchema
-} from './schemas';
+} from '../common/schemas/schemas';
 import { Security } from '../common/utils/security';
 
 @Controller('auth')

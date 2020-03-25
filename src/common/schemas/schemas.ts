@@ -12,3 +12,9 @@ export const loginUserSchema = {
   phone: Joi.string().required(),
   password: Joi.string().required()
 };
+
+export const updateUserSchema = {
+  phone: Joi.string().required(),
+  name: Joi.string().required(),
+  surname: Joi.string().required()
+};
