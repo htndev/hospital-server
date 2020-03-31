@@ -36,7 +36,7 @@ const UserSchema = new Schema({
   access: {
     type: Number,
     required: true,
-    default: 1
+    default: 0
   }
 }, {
   ...DEFAULTS.DB_PROPS,
