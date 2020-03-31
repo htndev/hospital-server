@@ -18,3 +18,10 @@ export const updateUserSchema = {
   name: Joi.string().required(),
   surname: Joi.string().required()
 };
+
+export const updateUserPasswordSchema = {
+  phone: Joi.string().required(),
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required(),
+  newPasswordConfirmation: Joi.string().required()
+};
