@@ -25,3 +25,9 @@ export const updateUserPasswordSchema = {
   newPassword: Joi.string().required(),
   newPasswordConfirmation: Joi.string().required()
 };
+
+export const doctorSchema = {
+  name: Joi.string().required(),
+  surname: Joi.string().required(),
+  speciality: Joi.string().required()
+};

@@ -8,6 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
+import { DoctorModule } from './doctor/doctor.module';
+import { SpecialitiesModule } from './specialities/specialities.module';
 
 const config = new Config();
 
@@ -20,7 +22,9 @@ const config = new Config();
       rootPath: join(__dirname, '..', 'public'),
       serveRoot: '/files'
     }),
-    UserModule
+    UserModule,
+    DoctorModule,
+    SpecialitiesModule
   ],
   controllers: [ AppController ],
   providers: [ AppService, Config ],

@@ -7,3 +7,14 @@ export interface User extends Document {
   patronymics?: string;
   password: string;
 }
+
+export interface Speciality extends Document {
+  title: string;
+}
+
+export interface Doctor extends Document {
+  name: string;
+  surname: string;
+  patronymics: string;
+  speciality: string[];
+}
