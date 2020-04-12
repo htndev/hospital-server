@@ -9,12 +9,17 @@ import {
   BadRequestException, Put, ConflictException, NotFoundException
 } from '@nestjs/common';
 import { SpecialitiesService } from './specialities.service';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('specialities')
 export class SpecialitiesController {
   constructor(private readonly specialitiesService: SpecialitiesService) {}
 
   @Get()
+  @ApiQuery({
+    name: 'doctorsRequired',
+    enum: [ 'object', 'amount', undefined ]
+  })
   async getSpecialities(
     @Query('doctorsRequired') doctorsRequired: 'object' | 'amount' | unknown
   ) {

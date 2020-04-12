@@ -12,34 +12,56 @@ export class SpecialitiesService {
   ) {}
 
   async getAllSpecialities(doctorsRequired: boolean | unknown) {
-    if(!doctorsRequired) {
-      return this.specialityModel.find({}, {
-        createdAt: 0,
-        updatedAt: 0,
-        _id: 0
-      });
+    switch (doctorsRequired) {
+      case 'amount':
+        const specialities = await this.specialityModel.find({}, {
+          title: 1,
+          _id: 0,
+          uid: 1
+        });
+        const doctors = await this.doctorModel.find({}, {
+          _id: 0,
+          speciality: 1
+        });
+        const specialitiesUids: [] = this.flat(doctors.map(doc => doc.speciality));
+        const uniqueSpecUids = _.uniq([ ...specialitiesUids ]);
+        const obj: any = {};
+
+        uniqueSpecUids.map(uid => {
+          obj[uid] = specialitiesUids.filter(id => id === uid).length;
+        });
+
+        const filteredSpecs = specialities.map((spec: any) => ({ ...spec._doc, amount: obj[spec.uid] || 0 }));
+
+        return filteredSpecs;
+      case 'object':
+        return this.specialityModel.aggregate([
+          {
+            $lookup: {
+              from: 'doctors',
+              localField: 'uid',
+              foreignField: 'speciality',
+              as: 'doctors'
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              createdAt: 0,
+              updatedAt: 0,
+              'doctors.speciality': 0,
+              'doctors.createdAt': 0,
+              'doctors.updatedAt': 0
+            }
+          }
+        ]);
+      default:
+        return this.specialityModel.find({}, {
+          createdAt: 0,
+          updatedAt: 0,
+          _id: 0
+        });
     }
-
-    const specialities = await this.specialityModel.find({}, {
-      title: 1,
-      _id: 0,
-      uid: 1
-    });
-    const doctors = await this.doctorModel.find({}, {
-      _id: 0,
-      speciality: 1
-    });
-    const specialitiesUids: [] = this.flat(doctors.map(doc => doc.speciality));
-    const uniqueSpecUids = _.uniq([ ...specialitiesUids ]);
-    const obj: any = {};
-
-    uniqueSpecUids.map(uid => {
-      obj[uid] = specialitiesUids.filter(id => id === uid).length;
-    });
-
-    const filteredSpecs = specialities.map((spec: any) => ({ ...spec._doc, amount: obj[spec.uid] || 0 }));
-
-    return filteredSpecs;
   }
 
   async addSpeciality({ title }: {title: string}): Promise<object> {

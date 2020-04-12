@@ -35,7 +35,14 @@ export class DoctorService {
   }
 
   async updateDoctor({ name, surname, patronymics, speciality, _id }, image = null) {
+    if(speciality[0].value) {
+      speciality[0] = speciality[0].value;
+    }
     return image ? this.doctorModel.updateOne({ _id }, { name, surname, patronymics, speciality, image }) : this.doctorModel.updateOne({ _id }, { name, surname, patronymics, speciality });
+  }
+
+  async deleteDoctor({ _id }: {_id: string}) {
+    await this.doctorModel.deleteOne({ _id });
   }
 
   async doctorExists({ _id }) {

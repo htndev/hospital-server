@@ -6,7 +6,7 @@ import {
   Controller,
   UploadedFile,
   UseInterceptors,
-  BadRequestException
+  BadRequestException, Delete, Param, NotFoundException
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v1 as uuid } from 'uuid';
@@ -31,6 +31,8 @@ export class DoctorController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async addDoctor(@UploadedFile() avatar: any, @Body() doctor: DoctorDto): Promise<any> {
+    console.log(doctor);
+    console.log(avatar);
     if(!await isValidBySchema(doctor, doctorSchema)) {
       throw new BadRequestException('Не все необходимые данные указаны.');
     }
@@ -85,9 +87,28 @@ export class DoctorController {
       await fse.writeFile(filePath, avatar.buffer);
     }
 
-    const updatedDoctor = await this.doctorService.updateDoctor({ _id, ...doctor, speciality: JSON.parse(doctor.speciality) }, image);
+    await this.doctorService.updateDoctor({ _id, ...doctor, speciality: JSON.parse(doctor.speciality) }, image);
 
-    return this.removeDevOptions(updatedDoctor);
+    return {
+      status: 200,
+      message: 'Доктор успешно обновлен.'
+    };
+  }
+
+  @Delete(':_id')
+  async deleteDoctor(
+    @Param('_id') _id: string
+  ) {
+    if(!await this.doctorService.doctorExists({ _id })) {
+      throw new NotFoundException('Доктор с таким id не найден.');
+    }
+
+    await this.doctorService.deleteDoctor({ _id });
+
+    return {
+      status: 200,
+      message: 'Доктор успешно удален.'
+    };
   }
 
   private getExtention(filename: string): string {
