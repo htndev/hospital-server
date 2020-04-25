@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export interface User extends Document {
   phone: string;
@@ -17,4 +17,15 @@ export interface Doctor extends Document {
   surname: string;
   patronymics: string;
   speciality: string[];
+}
+
+export interface Callback extends Document {
+  doctorId: Types.ObjectId;
+  patientPhone: string;
+  speciality: string;
+}
+
+export interface Book extends Document, Callback {
+  acceptanceDate: Date;
+  comment: string;
 }

@@ -10,6 +10,8 @@ import { join } from 'path';
 import { UserModule } from './user/user.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
+import { BookModule } from './book/book.module';
+import { CallbackModule } from './callback/callback.module';
 
 const config = new Config();
 
@@ -24,7 +26,9 @@ const config = new Config();
     }),
     UserModule,
     DoctorModule,
-    SpecialitiesModule
+    SpecialitiesModule,
+    BookModule,
+    CallbackModule
   ],
   controllers: [ AppController ],
   providers: [ AppService, Config ],

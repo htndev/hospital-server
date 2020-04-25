@@ -31,8 +31,6 @@ export class DoctorController {
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async addDoctor(@UploadedFile() avatar: any, @Body() doctor: DoctorDto): Promise<any> {
-    console.log(doctor);
-    console.log(avatar);
     if(!await isValidBySchema(doctor, doctorSchema)) {
       throw new BadRequestException('Не все необходимые данные указаны.');
     }
