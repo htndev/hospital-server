@@ -1,4 +1,7 @@
 export default {
   USERS: 'users',
-  DOCTORS: 'doctors'
+  DOCTORS: 'doctors',
+  SPECIALITIES: 'specialities',
+  BOOKS: 'books',
+  CALLBACK: 'callback'
 };

@@ -3,7 +3,6 @@ import PATTERNS from '../../constants/patterns';
 import { Security } from '../../utils/security';
 import DEFAULTS from '../../constants/defaults';
 import COLLECTIONS from '../collections';
-
 const UserSchema = new Schema({
   phone: {
     type: String,
@@ -33,6 +32,11 @@ const UserSchema = new Schema({
       validator: (v: string) => PATTERNS.PASSWORD().test(v),
       message: 'Пароль должен иметь минимум 6 символов.'
     }
+  },
+  access: {
+    type: Number,
+    required: true,
+    default: 0
   }
 }, {
   ...DEFAULTS.DB_PROPS,
