@@ -12,6 +12,7 @@ import { DoctorModule } from './doctor/doctor.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { BookModule } from './book/book.module';
 import { CallbackModule } from './callback/callback.module';
+import { StatsModule } from './stats/stats.module';
 
 const config = new Config();
 
@@ -28,7 +29,8 @@ const config = new Config();
     DoctorModule,
     SpecialitiesModule,
     BookModule,
-    CallbackModule
+    CallbackModule,
+    StatsModule
   ],
   controllers: [ AppController ],
   providers: [ AppService, Config ],
